@@ -109,6 +109,15 @@
         @click="$emit('selectionLetters')"
       />6
     </li>
+      <li class="p-2">
+      <input
+        type="radio"
+        name="letras"
+        id="letras"
+        value="10"
+        @click="$emit('selectionLetters')"
+      />10
+    </li>
     <li class="p-2">
       <input
         type="radio"

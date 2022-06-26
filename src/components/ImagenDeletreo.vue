@@ -1,5 +1,6 @@
 <template>
  <div class="flex justify-center mt-10">
+   
     <img 
       :src="imgSrc"
       class=""
@@ -15,17 +16,6 @@
 <script>
 export default {
 
-//   props:{
-//      pokemonId: {
-//         type: Number,
-//         required: true
-//      },
-//      showPokemon: {
-//        type: Boolean,
-//        required: true,
-//        default: false
-//      }
-//   },
     computed: {
        imgSrc() {
             return `https://asl.ms/()/images/blank.gif`

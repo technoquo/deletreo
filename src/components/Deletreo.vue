@@ -12,7 +12,7 @@
           "
         >
           <h1 class="pt-8 text-center">{{ msg }}</h1>
-          <ImagenDeletreo />
+          <ImagenDeletreo :show-deletreo="showDeletreo" />
         </section>
         <ToolsOpciones
           @nueva-palabra="nuevaPalabra"
@@ -22,21 +22,28 @@
         />
       </div>
     </div>
-    <input type="hidden" name="palabra" />
+    <input type="text" name="palabra" />
   </main>
 </template>
 
 <script>
 import ImagenDeletreo from "@/components/ImagenDeletreo";
 import ToolsOpciones from "@/components/ToolsOpciones";
-import getDeletreoPalabras from "@/helpers/getDeletreo";
 import getDeletreoTodo from "@/helpers/getDeletreoTodo";
+
+function MostrarImagenNegra() {
+  console.log('fadsf');
+  setTimeout(() => {
+    document.images["AlfabetoLECO"].src = "https://asl.ms/()/images/blank.gif";
+  }, 1000);
+}
 
 export default {
   name: "Deletreo",
   data() {
     return {
       deletreoArr: [],
+      LetraMaxArr: []
     };
   },
   components: { ImagenDeletreo, ToolsOpciones },
@@ -45,93 +52,127 @@ export default {
   },
   methods: {
     async palabraArray(defecto) {
-     
-      this.deletreoArr = await getDeletreoPalabras();
-    
-      document.querySelector('input[name="palabra"]').value = this.deletreoArr.data.name
-      const letraArr = this.deletreoArr.data.name.split("")
-      let delay = 0;
+      this.deletreoArr = await getDeletreoTodo();
 
-      letraArr.forEach(function (res) {
+      document.querySelector('input[name="palabra"]').value =
+        this.deletreoArr[0].name;
+      const letraArr = this.deletreoArr[0].name.split("");
+      let delay = 0;
+      let x = 1;
+      letraArr.forEach(function (res, ind) {
         setTimeout(function () {
           document.images["AlfabetoLECO"].src =
             "https://asl.ms/()/images/" + res + ".gif";
+
+          if (parseInt(x + 1) === parseInt(letraArr.length + 1)) {
+            MostrarImagenNegra();
+          }
+
+          x++;
         }, 1000 + delay);
         delay += defecto;
       });
     },
     nuevaPalabra() {
       this.deletreoArr = [];
-      switch (document.querySelector('input[name="speed"]:checked').value) {
-      case "1000":
-          this.palabraArray(1000)
-          break;
-        case "666":
-          this.palabraArray(666)
-          break;
-        case "333":
-          this.palabraArray(333)
-          break;
-        default:
-          this.palabraArray(200)
+      if (document.querySelector('input[name="speed"]:checked') == null) {
+        this.palabraArray(333);
+        false;
+      } else {
+        switch (document.querySelector('input[name="speed"]:checked').value) {
+          case "1000":
+            this.palabraArray(1000);
+            break;
+          case "666":
+            this.palabraArray(666);
+            break;
+          case "333":
+            this.palabraArray(333);
+            break;
+          default:
+            this.palabraArray(200);
+        }
       }
     },
     escogerTiempo() {
-       
-        switch (document.querySelector('input[name="speed"]:checked').value) {
+      switch (document.querySelector('input[name="speed"]:checked').value) {
         case "1000":
-          this.RepetirpalabraArray(1000)
+          this.RepetirpalabraArray(1000);
           break;
         case "666":
-          this.RepetirpalabraArray(666)
+          this.RepetirpalabraArray(666);
           break;
         case "333":
-          this.RepetirpalabraArray(333)
+          this.RepetirpalabraArray(333);
           break;
         default:
-          this.RepetirpalabraArray(200)
+          this.RepetirpalabraArray(200);
       }
     },
-    RepetirpalabraArray(defecto) {    
-      
-       this.deletreoArr = [];
-      const letraArr = document.querySelector('input[name="palabra"]').value.split("");
+    RepetirpalabraArray(defecto) {
+      // revisar eso 
+      this.deletreoArr = [];
+      const letraArr = document
+        .querySelector('input[name="palabra"]')
+        .value.split("");
       let delay = 0;
-
+      let x = 1;
       letraArr.forEach(function (res) {
         setTimeout(function () {
           document.images["AlfabetoLECO"].src =
             "https://asl.ms/()/images/" + res + ".gif";
+
+            if (parseInt(x + 1) === parseInt(letraArr.length + 1)) {
+          MostrarImagenNegra()
+        }
+
+        x++;
         }, 1000 + delay);
-        delay += defecto;
+        delay += defecto;        
       });
     },
-   otravezDeletreo(){
+    otravezDeletreo() {
+      if (document.querySelector('input[name="speed"]:checked') == null) {
+        this.RepetirpalabraArray(333);
+      } else {
+        this.escogerTiempo();
+      }
+    },
+    async seleccionarLetra() {
+      this.deletreoArr = [];
+      let maxlength = document.querySelector(
+        'input[name="letras"]:checked'
+      ).value;
 
-    if (document.querySelector('input[name="speed"]:checked') == null){
-           this.RepetirpalabraArray(333, 'repetir')
-    } else {
-           this.RepetirpalabraArray(document.querySelector('input[name="speed"]:checked').value, 'repetir')
-    }
-   },
-  async seleccionarLetra(){
-           
-            let maxlength = document.querySelector('input[name="letras"]:checked').value
-         
-            this.getDeletreoTodo = await getDeletreoTodo();
-            
-          // console.log(this.getDeletreoTodo.data.results[].name.length)
-          
-        // for (i=0; i<this.getDeletreoTodo.data.results[i].name.length <= parseInt(maxlength); i++) {
-        //      console.log(i); 
-        // }
-        
-         
-   },
-  set_lenght_lim() {
-       
-  }
+      this.getDeletreoTodo = await getDeletreoTodo();
 
+      this.LetraMaxArr = this.getDeletreoTodo;
+
+      this.LetraMaxArr.forEach(function (res) {
+        if (res.name.length <= parseInt(maxlength)) {
+          let delay = 0;
+          let x = 1;
+          document.querySelector('input[name="palabra"]').value = res.name;
+          console.log(res.name);
+          const letraArr = res.name.split("");
+          letraArr.forEach(function (res) {
+            setTimeout(function () {
+              document.images["AlfabetoLECO"].src =
+                "https://asl.ms/()/images/" + res + ".gif";
+
+              if (parseInt(x + 1) === parseInt(letraArr.length + 1)) {
+                MostrarImagenNegra();
+              }
+
+              x++;
+            }, 1000 + delay);
+            delay += 333;
+          });
+        } else {
+          console.log("no hay");
+        }
+      });
+    },
   },
 
   mounted() {
