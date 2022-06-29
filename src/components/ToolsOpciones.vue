@@ -30,6 +30,22 @@
   >
     Repetir palabra
   </button>
+    <button
+    class="
+      ml-5
+      bg-blue-500
+      hover:bg-blue-700
+      text-white
+      font-bold
+      py-2
+      px-4
+      rounded
+      p-4
+    "
+    @click="$emit('verificarPalabra')"
+  >
+   Verificar
+  </button>
 
   <ul>
     <li>

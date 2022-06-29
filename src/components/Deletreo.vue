@@ -19,10 +19,12 @@
           @selection-speed="escogerTiempo"
           @repetir-palabra="otravezDeletreo"
           @selection-letters="seleccionarLetra"
+          @verificar-palabra="verificarPalabra"
         />
       </div>
     </div>
-    <input type="text" name="palabra" />
+    <input type="hidden" name="palabra" />
+    <input type="text" class="bg-gray-500 rounded text-white" name="acertado" />
   </main>
 </template>
 
@@ -32,10 +34,101 @@ import ToolsOpciones from "@/components/ToolsOpciones";
 import getDeletreoTodo from "@/helpers/getDeletreoTodo";
 
 function MostrarImagenNegra() {
-  console.log('fadsf');
   setTimeout(() => {
     document.images["AlfabetoLECO"].src = "https://asl.ms/()/images/blank.gif";
   }, 1000);
+}
+
+function ArrayLetra(array, defecto) {
+  let delay = 0;
+  let x = 1;
+
+  let start = 1;
+
+  let text = array.toString();
+  let word = text.replace(/,/g, "");
+
+  array.forEach(function (res, ind) {
+    setTimeout(function () {
+      if (word.match(res + array[ind]) == null) {
+        document.images["AlfabetoLECO"].src =
+          "https://asl.ms/()/images/" + res + ".gif";
+      } else if (word.match(res + array[ind]) != null) {
+        let checkindoble = start - 1;
+
+        if (checkindoble % 2 == 0) {
+          
+          document.images["AlfabetoLECO"].src =
+            "https://asl.ms/()/images/" + res + ".gif";
+        } else {
+          
+          document.images["AlfabetoLECO"].src =
+            "https://asl.ms/()/images/" + res + array[ind] + ".gif";
+        }
+        start++;
+      }
+
+      if (parseInt(x + 1) === parseInt(array.length + 1)) {
+        MostrarImagenNegra();
+      }
+
+      x++;
+    }, 1000 + delay);
+    delay += defecto;
+  });
+}
+
+function ArrayMaxLetra(nombres, maxlength, defecto) {
+   
+ 
+    let delay = 0;
+    let x = 1;
+
+    let start = 1;
+
+   
+    let word = nombres.name.replace(/,/g, "");
+    
+       
+    document.querySelector('input[name="palabra"]').value = nombres.name;
+  
+     const letraArr = nombres.name.split("");
+
+
+
+    letraArr.forEach(function (letra, ind) {
+      setTimeout(function () {
+        
+     if (word.match(letra + letraArr[ind]) == null) {
+        
+        document.images["AlfabetoLECO"].src =
+          "https://asl.ms/()/images/" + letra + ".gif";
+      } else if (word.match(letra + letraArr[ind]) != null) {
+        let checkindoble = start - 1;
+          
+        if (checkindoble % 2 == 0) {
+          
+          document.images["AlfabetoLECO"].src =
+            "https://asl.ms/()/images/" + letra + ".gif";
+        } else {
+          
+          document.images["AlfabetoLECO"].src =
+            "https://asl.ms/()/images/" + letra + letraArr[ind] + ".gif";
+        }
+        start++;
+      }
+
+      
+
+        if (parseInt(x + 1) === parseInt(letraArr.length + 1)) {
+          MostrarImagenNegra();
+        }
+
+        x++;
+      }, 1000 + delay);
+      delay += defecto;
+    });
+  //}
 }
 
 export default {
@@ -43,7 +136,7 @@ export default {
   data() {
     return {
       deletreoArr: [],
-      LetraMaxArr: []
+      LetraMaxArr: [],
     };
   },
   components: { ImagenDeletreo, ToolsOpciones },
@@ -53,25 +146,10 @@ export default {
   methods: {
     async palabraArray(defecto) {
       this.deletreoArr = await getDeletreoTodo();
-
       document.querySelector('input[name="palabra"]').value =
         this.deletreoArr[0].name;
       const letraArr = this.deletreoArr[0].name.split("");
-      let delay = 0;
-      let x = 1;
-      letraArr.forEach(function (res, ind) {
-        setTimeout(function () {
-          document.images["AlfabetoLECO"].src =
-            "https://asl.ms/()/images/" + res + ".gif";
-
-          if (parseInt(x + 1) === parseInt(letraArr.length + 1)) {
-            MostrarImagenNegra();
-          }
-
-          x++;
-        }, 1000 + delay);
-        delay += defecto;
-      });
+     ArrayLetra(letraArr, defecto);
     },
     nuevaPalabra() {
       this.deletreoArr = [];
@@ -110,26 +188,11 @@ export default {
       }
     },
     RepetirpalabraArray(defecto) {
-      // revisar eso 
       this.deletreoArr = [];
       const letraArr = document
         .querySelector('input[name="palabra"]')
         .value.split("");
-      let delay = 0;
-      let x = 1;
-      letraArr.forEach(function (res) {
-        setTimeout(function () {
-          document.images["AlfabetoLECO"].src =
-            "https://asl.ms/()/images/" + res + ".gif";
-
-            if (parseInt(x + 1) === parseInt(letraArr.length + 1)) {
-          MostrarImagenNegra()
-        }
-
-        x++;
-        }, 1000 + delay);
-        delay += defecto;        
-      });
+      ArrayLetra(letraArr, defecto);
     },
     otravezDeletreo() {
       if (document.querySelector('input[name="speed"]:checked') == null) {
@@ -139,6 +202,7 @@ export default {
       }
     },
     async seleccionarLetra() {
+      //revisar
       this.deletreoArr = [];
       let maxlength = document.querySelector(
         'input[name="letras"]:checked'
@@ -148,35 +212,34 @@ export default {
 
       this.LetraMaxArr = this.getDeletreoTodo;
 
-      this.LetraMaxArr.forEach(function (res) {
-        if (res.name.length <= parseInt(maxlength)) {
-          let delay = 0;
-          let x = 1;
-          document.querySelector('input[name="palabra"]').value = res.name;
-          console.log(res.name);
-          const letraArr = res.name.split("");
-          letraArr.forEach(function (res) {
-            setTimeout(function () {
-              document.images["AlfabetoLECO"].src =
-                "https://asl.ms/()/images/" + res + ".gif";
-
-              if (parseInt(x + 1) === parseInt(letraArr.length + 1)) {
-                MostrarImagenNegra();
-              }
-
-              x++;
-            }, 1000 + delay);
-            delay += 333;
-          });
+      this.LetraMaxArr.forEach(function (nombres) {
+        if (document.querySelector('input[name="speed"]:checked') == null) {
+          ArrayMaxLetra(nombres, maxlength, 333);
         } else {
-          console.log("no hay");
+          ArrayMaxLetra(
+            nombres,
+            maxlength,
+            parseInt(
+              document.querySelector('input[name="speed"]:checked').value
+            )
+          );
         }
       });
+    },
+    verificarPalabra() {
+      if (
+        document.querySelector('input[name="acertado"]').value ==
+        document.querySelector('input[name="palabra"]').value
+      ) {
+        alert("CORRECTO!");
+      } else {
+        alert("INCORRECTO");
+      }
     },
   },
 
   mounted() {
-    this.palabraArray(333);
+    this.palabraArray(666);
   },
 };
 </script>
