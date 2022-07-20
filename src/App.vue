@@ -1,16 +1,18 @@
 <template>
-
-  <Deletreo msg="Deletreo Manual"/>
+  <Navbar />
+   <router-view />  
 </template>
 
 <script>
 
-import Deletreo from './components/Deletreo'
+
+import { defineAsyncComponent } from 'vue'
 
 export default {
   name: 'App',
   components: {
-    Deletreo
+   
+    Navbar: defineAsyncComponent(() => import(/*webpackChuhkName:"Navbar"*/ '@/modules/shared/components/Navbar.vue'))
   }
 }
 </script>

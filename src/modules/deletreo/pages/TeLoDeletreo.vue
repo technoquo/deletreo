@@ -33,6 +33,29 @@ import ImagenDeletreo from "@/components/ImagenDeletreo";
 import ToolsOpciones from "@/components/ToolsOpciones";
 import getDeletreoTodo from "@/helpers/getDeletreoTodo";
 
+var normalize = (function() {
+  var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç", 
+      to   = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+      mapping = {};
+ 
+  for(var i = 0, j = from.length; i < j; i++ )
+      mapping[ from.charAt( i ) ] = to.charAt( i );
+ 
+  return function( str ) {
+      var ret = [];
+      for( var i = 0, j = str.length; i < j; i++ ) {
+          var c = str.charAt( i );
+          if( mapping.hasOwnProperty( str.charAt( i ) ) )
+              ret.push( mapping[ c ] );
+          else
+              ret.push( c );
+      }      
+      return ret.join( '' );
+  }
+ 
+})();
+
+
 function MostrarImagenNegra() {
   setTimeout(() => {
     document.images["AlfabetoLECO"].src = "https://asl.ms/()/images/blank.gif";
@@ -49,21 +72,24 @@ function ArrayLetra(array, defecto) {
   let word = text.replace(/,/g, "");
 
   array.forEach(function (res, ind) {
+
+
     setTimeout(function () {
-      if (word.match(res + array[ind]) == null) {
+        
+      if (word.match(normalize(res) + normalize(array[ind])) == null) {
         document.images["AlfabetoLECO"].src =
-          "https://asl.ms/()/images/" + res + ".gif";
-      } else if (word.match(res + array[ind]) != null) {
+          "https://asl.ms/()/images/" + normalize(res) + ".gif";
+      } else if (word.match(normalize(res) + normalize(array[ind])) != null) {
         let checkindoble = start - 1;
 
         if (checkindoble % 2 == 0) {
           
           document.images["AlfabetoLECO"].src =
-            "https://asl.ms/()/images/" + res + ".gif";
+            "https://asl.ms/()/images/" + normalize(res) + ".gif";
         } else {
           
           document.images["AlfabetoLECO"].src =
-            "https://asl.ms/()/images/" + res + array[ind] + ".gif";
+            "https://asl.ms/()/images/" + normalize(res) + normalize(array[ind]) + ".gif";
         }
         start++;
       }
@@ -149,7 +175,11 @@ export default {
       document.querySelector('input[name="palabra"]').value =
         this.deletreoArr[0].name;
       const letraArr = this.deletreoArr[0].name.split("");
-     ArrayLetra(letraArr, defecto);
+
+      // let palabratemporal = 'lleno'
+      // const letraArr = palabratemporal.split("");
+   
+       ArrayLetra(letraArr, defecto);
     },
     nuevaPalabra() {
       this.deletreoArr = [];

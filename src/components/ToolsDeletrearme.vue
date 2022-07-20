@@ -1,0 +1,62 @@
+<template>
+   
+
+    <button
+    class="
+      ml-5
+      bg-blue-500
+      hover:bg-blue-700
+      text-white
+      font-bold
+      py-2
+      px-4
+      rounded
+      p-4
+    "
+    @click="$emit('DeletrearMe')"
+  >
+   Deletrearlo
+  </button>
+     <ul>
+    <li>
+      <input
+        type="radio"
+        name="speed"
+        id="speed"
+        value="1000"
+        @click="$emit('selectionSpeed')"
+      />Despacio
+    </li>
+    <li>
+      <input
+        type="radio"
+        name="speed"
+        id="speed"
+        value="666"
+        @click="$emit('selectionSpeed')"
+      />Medio
+    </li>
+    <li>
+      <input
+        type="radio"
+        name="speed"
+        id="speed"
+        value="333"
+        @click="$emit('selectionSpeed')"
+      />Rápido
+    </li>
+    <li>
+      <input
+        type="radio"
+        name="speed"
+        id="speed"
+        value="200"
+        @click="$emit('selectionSpeed')"
+      />Sordo
+    </li>
+  </ul>
+</template>
+
+<script>
+export default {};
+</script>
