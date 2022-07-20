@@ -24,9 +24,8 @@ const getDeletreoTodo = async ([a] = []) => {
    ]
    
    const [p1] = await Promise.all( promiseArr)
-   
    return [
-    { name: p1.data.name, id: p1.data.id}
+    { name: p1.data.data.palabra, id: p1.data.data.id}
    ]
  
 }
