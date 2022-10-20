@@ -1,14 +1,13 @@
 <template>
-  <main class="sm:container sm:mx-auto sm:max-w-lg sm:mt-10">
+<div :style="image" class="image">
+  <main class="sm:container sm:mx-auto sm:max-w-lg sm:mt-0">
     <div class="flex">
       <div class="w-full">
         <section
           class="
             flex flex-col
             break-words
-            bg-white
-            sm:border-1 sm:rounded-md sm:shadow-2xl
-            p-8
+            p-8 mt-80
           "
         >
           <h1 class="pt-8 text-center">{{ msg }}</h1>
@@ -24,8 +23,12 @@
       </div>
     </div>
     <input type="hidden" name="palabra" />
-    <input type="text" class="bg-gray-500 rounded text-white" name="acertado" />
+
+   
+
+   
   </main>
+</div>
 </template>
 
 <script>
@@ -163,6 +166,7 @@ export default {
     return {
       deletreoArr: [],
       LetraMaxArr: [],
+      image: {backgroundImage: "url(/img/Header-banner.jpg)"},
     };
   },
   components: { ImagenDeletreo, ToolsOpciones },
@@ -275,4 +279,11 @@ export default {
 </script>
 
 <style>
+.image {     
+  background-size: cover;
+  width: 100%;
+  height: 500px;
+  resize: both;
+
+    }
 </style>
