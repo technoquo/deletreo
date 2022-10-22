@@ -153,18 +153,55 @@
     <div class="flex justify-center mt-16 font-bold text-cyan-500 text-[24px]">
       Tu Puntuación:
     </div>
-   <div id="reset">
-    <div id="correcto" class="reset hidden">
-      <div class="flex justify-center text-green-400 font-bold mt-7">¡Muy bien!</div>
-      <img src="/img/Cali-MuyBien.png" alt="Muy bien" />
-    </div>
+    <div id="reset">
+      <div id="correcto" class="reset hidden">
+        <div class="flex justify-center text-green-400 font-bold mt-7">
+          ¡Muy bien!
+        </div>
+        <div class="flex justify-center">
+          <div class="flex-auto">
+            <img src="/img/Cali-MuyBien.png" alt="Muy bien" />
+          </div>
+          <div class="flex-auto">
+            <div
+              class="
+                radial-progress
+                bg-green-600
+                text-primary-content
+                border-2 border-green-600
+              "
+              style="--value: 15; --size: 9rem; --thickness: 2rem"
+            >
+              15%
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div id="incorrecto" class="reset hidden">
-      <div class="flex justify-center text-red-500 font-bold mt-7">Lo siento...¡Intentá de nuevo! </div>
-      <img src="/img/Malis-Repetir.png" alt="Lo siento" />
+      <div id="incorrecto" class="reset hidden">
+        <div class="flex justify-center text-red-500 font-bold mt-7">
+          Lo siento...¡Intentá de nuevo!
+        </div>
+        <div class="flex justify-center">
+          <div class="flex-auto">
+            <img src="/img/Malis-Repetir.png" alt="Lo siento" />
+          </div>
+          <div class="flex-auto">
+            <div
+              class="
+                radial-progress
+                bg-red-600
+                text-primary-content
+                border-2 border-red-600
+              "
+              style="--value: 15; --size: 9rem; --thickness: 2rem"
+            >
+              15%
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-   </div>
-
   </div>
 </template>
 

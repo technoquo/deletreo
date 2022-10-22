@@ -317,6 +317,7 @@ export default {
          document.getElementById("reset").classList.remove("hidden");
          document.getElementById("correcto").classList.remove("hidden");
          document.getElementById("incorrecto").classList.add("hidden");
+         
       } else {
            document.getElementById("reset").classList.remove("hidden");
           document.getElementById("incorrecto").classList.remove("hidden");
