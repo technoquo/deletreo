@@ -1,7 +1,8 @@
 <template>
   <div class="flex justify-center">
     <button
-      class="
+      id="botton_nueva"
+      class="        
         bg-red-500
         hover:bg-red-700
         text-white
@@ -16,7 +17,9 @@
       Nueva palabra
     </button>
     <button
+      id="botton_repertir"
       class="
+        botton
         ml-5
         bg-red-500
         hover:bg-red-700
@@ -135,6 +138,7 @@
       autocomplete="off"
     />
     <button
+      id="check"
       class="
         ml-5
         bg-green-400
@@ -143,6 +147,7 @@
         rounded-2xl
         text-sm
         p-4
+        cursor-pointer        
       "
       @click="$emit('verificarPalabra')"
     >
@@ -164,16 +169,18 @@
           </div>
           <div class="flex-auto">
             <div
+              id="radial-progress"
               class="
                 radial-progress
                 bg-green-600
                 text-primary-content
                 border-2 border-green-600
               "
-              style="--value: 15; --size: 9rem; --thickness: 2rem"
+             
             >
-              15%
+              0  pts
             </div>
+            <input type="hidden" value="0" name="puntosacumulados" />
           </div>
         </div>
       </div>
@@ -188,20 +195,57 @@
           </div>
           <div class="flex-auto">
             <div
+              id="radial-progress-bad"
               class="
                 radial-progress
                 bg-red-600
                 text-primary-content
                 border-2 border-red-600
               "
-              style="--value: 15; --size: 9rem; --thickness: 2rem"
+              
             >
-              15%
+              0 pts
             </div>
+            <input type="hidden" value="0" name="puntosacumulados" />
+          </div>
+        </div>
+      </div>
+
+      <div id="exito" class="hidden">
+        <div class="flex justify-center text-cyan-500 font-bold mt-7">
+         ¡Felicidades!
+        </div>
+        <div class="flex justify-center">
+          <div class="flex-auto">
+            <img src="/img/Leo-Aplausos.png" alt="Lo siento" />
+          </div>
+          <div class="flex-auto">
+            <div
+              id="radial-progress-success"
+              class="
+                radial-progress
+                bg-cyan-600
+                text-primary-content
+                border-2 border-cyan-600
+              "
+              
+            >
+              0 pts
+            </div>
+            <input type="hidden" value="0" name="puntosacumulados" />
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </template>
+<script>
+export default {
+  props: {
+    greetingMessage: String
+  }
+}
+</script>
+
 
